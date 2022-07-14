@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
 
     private float shootAngle = 30f;
+    private float msBetweenShots = 100f;
+    private float nextShotTime;
     
     private void Awake()
     {
@@ -44,7 +46,10 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot(float angle)
     {
-        Instantiate(bullet, firePoint.position, Quaternion.Euler(0, angle, 0));
+        if (Time.time > nextShotTime) {
+            Instantiate(bullet, firePoint.position, Quaternion.Euler(0, angle, 0));
+            nextShotTime = Time.time + msBetweenShots / 1000;
+        }
     }
 
     private void FixedUpdate()
